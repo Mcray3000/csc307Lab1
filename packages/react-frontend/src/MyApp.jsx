@@ -27,6 +27,18 @@ function MyApp() {
       {
         name: "Charlie",
         job: "Janitor" // the rest of the data
+      },
+      {
+        name: "Mac",
+        job: "Bouncer"
+      },
+      {
+        name: "Dee",
+        job: "Aspring actress"
+      },
+      {
+        name: "Dennis",
+        job: "Bartender"
       }
     ]);
   
