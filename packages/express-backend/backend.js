@@ -64,8 +64,9 @@ const findUserById = (id) =>
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
+  userToAdd.id = (Math.floor(Math.random() * 900000) + 100000).toString();
   addUser(userToAdd);
-  res.status(201).send("User added sucessfully");
+  res.status(201).send(userToAdd);
 });
 
 const addUser = (user) => {
@@ -77,12 +78,22 @@ const addUser = (user) => {
 
 app.delete("/users/:id", (req, res) => {
   const userToRemove = req.params.id;
-  deleteUser(userToRemove);
-  res.send();
+  let isSucess;
+  isSucess = deleteUser(userToRemove);
+  if (isSucess) {
+    res.status(204).send();
+  } else {
+    res.status(404).send();
+  }
 });
 
 const deleteUser = (id) => {
-  users["users_list"] = users["users_list"].filter((user) => user.id !== id);
+  if (users["users_list"].some((user) => user.id === id)) {
+    users["users_list"] = users["users_list"].filter((user) => user.id !== id);
+    return true;
+  } else {
+    return false;
+  }
 };
 
 app.listen(port, () => {

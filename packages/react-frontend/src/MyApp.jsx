@@ -34,17 +34,28 @@ function MyApp() {
 
   function updateList(person) {
     postUser(person)
-      .then(() => setCharacters([...characters, person]))
+      .then((res) => res.json())
+      .then((person) => setCharacters([...characters, person]))
       .catch((error) => {
         console.log(error);
       });
   }
 
-  function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
+  function deleteUser(person) {
+    const promise = fetch(`http://localhost:8000/users/${person.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    setCharacters(updated);
+  }
+
+  function removeOneCharacter(index) {
+    const updated = characters[index];
+    // deleteUser(updated) find what i want send id delete confirem responce handle responce
+    // console.log(updated);
+    deleteUser(updated);
+    setCharacters(characters.filter((_, i) => i !== index));
   }
 
   return (
