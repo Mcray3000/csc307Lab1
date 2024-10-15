@@ -2,6 +2,9 @@
 import express from "express";
 import cors from "cors";
 
+// db time, oh yeah
+import userServices from "./models/user-services"
+
 const app = express();
 const port = 8000;
 
