@@ -3,16 +3,15 @@ import express from "express";
 import cors from "cors";
 
 // db time, oh yeah
-import userServices from "./models/user-services";
+import userServices from "./models/user-services.js";
 
-/*
-TODO
-  addUser,
-  getUsers,
-  findUserById,
-  findUserByName,
-  findUserByJob,
-*/
+
+// TODO
+//   addUser,
+//   getUsers,
+//   findUserById,
+//   findUserByName,
+//   findUserByJob,
 
 const app = express();
 const port = 8000;
@@ -25,10 +24,6 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hello McCay!");
 });
-
-const findUserByName = (name) => {
-  return users["users_list"].filter((user) => user["name"] === name);
-};
 
 // GET USER BY NAME AND JOB
 
@@ -67,11 +62,6 @@ app.post("/users", async (req, res) => {
     .addUser(userToAdd)
     .then((result) => res.status(201).send(result));
 });
-
-const addUser = (user) => {
-  users["users_list"].push(user);
-  return user;
-};
 
 app.delete("/users/:id", (req, res) => {
   const userToRemove = req.params.id;

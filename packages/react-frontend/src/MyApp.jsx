@@ -1,7 +1,7 @@
 // src/MyApp.jsx
 import React, { useState, useEffect } from "react";
-import Table from "./Table";
-import Form from "./Form";
+import Table from "./Table.jsx";
+import Form from "./Form.jsx";
 
 function MyApp() {
   const [characters, setCharacters] = useState([]);
@@ -9,7 +9,10 @@ function MyApp() {
   useEffect(() => {
     fetchUsers()
       .then((res) => res.json())
-      .then((json) => setCharacters(json["users_list"]))
+      .then((json) => {
+        console.log("json in hook ", json); // hard coded "uses_list" no longer exists cause it is now in db
+        setCharacters(json);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -57,7 +60,7 @@ function MyApp() {
     deleteUser(updated);
     setCharacters(characters.filter((_, i) => i !== index));
   }
-
+  console.log("Characters in my app", characters);
   return (
     <div className="container">
       <Table characterData={characters} removeCharacter={removeOneCharacter} />
