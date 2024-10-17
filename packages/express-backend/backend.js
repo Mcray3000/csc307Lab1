@@ -5,7 +5,6 @@ import cors from "cors";
 // db time, oh yeah
 import userServices from "./models/user-services.js";
 
-
 // TODO
 //   addUser,
 //   getUsers,
@@ -64,24 +63,26 @@ app.post("/users", async (req, res) => {
 });
 
 app.delete("/users/:id", (req, res) => {
-  const userToRemove = req.params.id;
-  let isSucess;
-  isSucess = deleteUser(userToRemove);
-  if (isSucess) {
-    res.status(204).send();
-  } else {
-    res.status(404).send();
-  }
+  const id = req.params.id;
+  userServices
+    .deleteUser(id)
+    .then((result) => {
+      if (result) res.status(200).send(result);
+      else res.status(404).send(`Not Found: ${id}`);
+    })
+    .catch((error) => {
+      res.status(500).send(error.name);
+    });
 });
 
-const deleteUser = (id) => {
-  if (users["users_list"].some((user) => user.id === id)) {
-    users["users_list"] = users["users_list"].filter((user) => user.id !== id);
-    return true;
-  } else {
-    return false;
-  }
-};
+// const deleteUser = (id) => {
+//   if (users["users_list"].some((user) => user.id === id)) {
+//     users["users_list"] = users["users_list"].filter((user) => user.id !== id);
+//     return true;
+//   } else {
+//     return false;
+//   }
+// };
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
