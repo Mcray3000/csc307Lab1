@@ -67,7 +67,7 @@ app.delete("/users/:id", (req, res) => {
   userServices
     .deleteUser(id)
     .then((result) => {
-      if (result) res.status(200).send(result);
+      if (result) res.status(204).send(result);
       else res.status(404).send(`Not Found: ${id}`);
     })
     .catch((error) => {
